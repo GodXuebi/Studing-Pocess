@@ -76,6 +76,49 @@ Singleton* Singleton::GetInstance()
 	return tmp;
 }
 //*********************************************************
+
+
+//*********************************************************
+//Writen by myself
+template<class T>
+class Singleton
+{
+private:
+	static pthread_mutex_t mutex;
+	static T* volatile instance;
+	Singleton(){pthread_mutex_init(&mutex,NULL);}
+	~Singleton();
+	Singleton(const Singleton&other);
+	Singleton&operator(const Singleton&other);
+public:
+	Singleton*getInstance()
+	{
+		if(!instance)
+		{
+			pthread_mutex_lock(&lock);
+			if(!instance)
+			{
+				instance = new T();
+				atexit(Destroy);
+			}
+			pthread_mutex_lock(&lock);
+		}
+	}
+	
+	void Destroy()
+	{
+		if(instance)
+		{
+			delete instance;	
+		}
+		return;
+	}
+};
+
+template<class T>
+T Singleton<T>::pthread_mutex_t mutex;
+T*Singleton<T>::instance == NULL;
+
 #endif 
 
 

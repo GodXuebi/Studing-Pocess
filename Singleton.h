@@ -20,7 +20,7 @@ Singleton*Singleton::instance = NULL;
 Singleton* Singleton::GetInstance()
 {
 	if(instance == NULL)
-		instance =n ew Singleton();
+		instance =new Singleton();
 	return instance;
 
 }
@@ -77,3 +77,6 @@ Singleton* Singleton::GetInstance()
 }
 //*********************************************************
 #endif 
+
+
+https://blog.csdn.net/qq_30968657/article/details/69261134?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.nonecase&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.nonecase

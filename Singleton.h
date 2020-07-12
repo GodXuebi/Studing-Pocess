@@ -84,24 +84,23 @@ template<class T>
 class Singleton
 {
 private:
-	static pthread_mutex_t mutex;
+	static std::mutex mtx;
 	static T* volatile instance;
-	Singleton(){pthread_mutex_init(&mutex,NULL);}
+	Singleton(){}
 	~Singleton();
 	Singleton(const Singleton&other);
-	Singleton&operator(const Singleton&other);
+	Singleton&operator=(const Singleton&other);
 public:
-	Singleton*getInstance()
+	T*getInstance()
 	{
 		if(!instance)
 		{
-			pthread_mutex_lock(&lock);
-			if(!instance)
+			lock_guard<std::mutex> lock(mtx)
+			if(!instance) 
 			{
 				instance = new T();
 				atexit(Destroy);
 			}
-			pthread_mutex_lock(&lock);
 		}
 	}
 	
@@ -116,7 +115,7 @@ public:
 };
 
 template<class T>
-T Singleton<T>::pthread_mutex_t mutex;
+std::mutex Singleton<T>::mtx;
 T*Singleton<T>::instance == NULL;
 
 #endif 
